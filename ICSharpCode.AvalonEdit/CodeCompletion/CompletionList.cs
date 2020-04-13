@@ -345,10 +345,19 @@ namespace ICSharpCode.AvalonEdit.CodeCompletion
 			}
 		}
 
+		/// <summary>
+		/// 自定义的匹配函数
+		/// </summary>
+		public Func<string, string, int> CustomGetMatchQualityFunc { get; set; }
+
 		int GetMatchQuality(string itemText, string query)
 		{
 			if (itemText == null)
 				throw new ArgumentNullException("itemText", "ICompletionData.Text returned null");
+
+			if (CustomGetMatchQualityFunc != null) {
+				return CustomGetMatchQualityFunc(itemText, query);
+			}
 
 			// Qualities:
 			//  	8 = full match case sensitive

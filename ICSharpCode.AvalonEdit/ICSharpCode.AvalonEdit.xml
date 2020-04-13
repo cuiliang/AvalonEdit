@@ -173,6 +173,11 @@
             Selects the item that starts with the specified query.
             </summary>
         </member>
+        <member name="P:ICSharpCode.AvalonEdit.CodeCompletion.CompletionList.CustomGetMatchQualityFunc">
+            <summary>
+            自定义的匹配函数
+            </summary>
+        </member>
         <member name="T:ICSharpCode.AvalonEdit.CodeCompletion.CompletionListBox">
             <summary>
             The list box used inside the CompletionList.
@@ -214,6 +219,11 @@
         <member name="P:ICSharpCode.AvalonEdit.CodeCompletion.CompletionWindow.CompletionList">
             <summary>
             Gets the completion list used in this completion window.
+            </summary>
+        </member>
+        <member name="P:ICSharpCode.AvalonEdit.CodeCompletion.CompletionWindow.CustomGetMatchQualityFunc">
+            <summary>
+            set custom filter func
             </summary>
         </member>
         <member name="M:ICSharpCode.AvalonEdit.CodeCompletion.CompletionWindow.#ctor(ICSharpCode.AvalonEdit.Editing.TextArea)">
@@ -6817,11 +6827,6 @@
             <summary>
             Collapses the specified text section.
             Runtime: O(log n)
-            </summary>
-        </member>
-        <member name="M:ICSharpCode.AvalonEdit.Rendering.HeightTree.CheckAllContainedIn(System.Collections.Generic.IEnumerable{ICSharpCode.AvalonEdit.Rendering.CollapsedLineSection},System.Collections.Generic.ICollection{ICSharpCode.AvalonEdit.Rendering.CollapsedLineSection})">
-            <summary>
-            Checks that all elements in list1 are contained in list2.
             </summary>
         </member>
         <member name="P:ICSharpCode.AvalonEdit.Rendering.HeightTreeLineNode.TotalHeight">

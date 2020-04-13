@@ -43,6 +43,14 @@ namespace ICSharpCode.AvalonEdit.CodeCompletion
 		}
 
 		/// <summary>
+		/// set custom filter func
+		/// </summary>
+		public Func<string, string, int> CustomGetMatchQualityFunc {
+			get => completionList.CustomGetMatchQualityFunc;
+			set => completionList.CustomGetMatchQualityFunc = value;
+		}
+
+		/// <summary>
 		/// Creates a new code completion window.
 		/// </summary>
 		public CompletionWindow(TextArea textArea) : base(textArea)
