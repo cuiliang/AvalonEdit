@@ -66,7 +66,7 @@ namespace ICSharpCode.AvalonEdit.Sample
 			//textEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("C#");
 			//textEditor.SyntaxHighlighting = customHighlighting;
 			// initial highlighting now set by XAML
-			
+			textEditor.TextArea.TextView.LineSpacing = 1.5;
 			textEditor.TextArea.TextEntering += textEditor_TextArea_TextEntering;
 			textEditor.TextArea.TextEntered += textEditor_TextArea_TextEntered;
 			SearchPanel.Install(textEditor);
@@ -75,6 +75,8 @@ namespace ICSharpCode.AvalonEdit.Sample
 			foldingUpdateTimer.Interval = TimeSpan.FromSeconds(2);
 			foldingUpdateTimer.Tick += delegate { UpdateFoldings(); };
 			foldingUpdateTimer.Start();
+
+			
 		}
 
 		string currentFileName;

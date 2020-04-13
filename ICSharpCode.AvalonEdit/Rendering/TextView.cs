@@ -1960,6 +1960,24 @@ namespace ICSharpCode.AvalonEdit.Rendering
 		}
 		#endregion
 
+		#region spacing
+
+		/// <summary>
+		/// line spacing, default is 1
+		/// </summary>
+		public static readonly DependencyProperty LineSpacingProperty = DependencyProperty.Register(
+			"LineSpacing", typeof(double), typeof(TextView), new FrameworkPropertyMetadata(1.0));
+
+		/// <summary>
+		/// line spacing ,default value is 1
+		/// https://stackoverflow.com/a/39417094/3335415
+		/// </summary>
+		public double LineSpacing {
+			get { return (double)GetValue(LineSpacingProperty); }
+			set { SetValue(LineSpacingProperty, value); }
+		}
+		#endregion
+
 		/// <summary>
 		/// Collapses lines for the purpose of scrolling. <see cref="DocumentLine"/>s marked as collapsed will be hidden
 		/// and not used to start the generation of a <see cref="VisualLine"/>.
