@@ -450,6 +450,9 @@ namespace ICSharpCode.AvalonEdit.Editing
 		internal void BringCaretToView(double border)
 		{
 			Rect caretRectangle = CalculateCaretRectangle();
+			
+			Debug.WriteLine("caretRectangle:" + caretRectangle);
+
 			if (!caretRectangle.IsEmpty) {
 				caretRectangle.Inflate(border, border);
 				textView.MakeVisible(caretRectangle);

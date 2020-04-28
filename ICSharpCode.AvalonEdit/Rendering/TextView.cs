@@ -1174,6 +1174,8 @@ namespace ICSharpCode.AvalonEdit.Rendering
 			if (document == null || allVisualLines.Count == 0)
 				return finalSize;
 
+			Debug.WriteLine("Arrange finalSize BEFORE=" + finalSize + ", scrollOffset=" + scrollOffset) ;
+
 			// validate scroll position
 			Vector newScrollOffset = scrollOffset;
 			if (scrollOffset.X + finalSize.Width > scrollExtent.Width) {
@@ -1185,7 +1187,7 @@ namespace ICSharpCode.AvalonEdit.Rendering
 			if (SetScrollData(scrollViewport, scrollExtent, newScrollOffset))
 				InvalidateMeasure(DispatcherPriority.Normal);
 
-			//Debug.WriteLine("Arrange finalSize=" + finalSize + ", scrollOffset=" + scrollOffset);
+			Debug.WriteLine("Arrange finalSize=" + finalSize + ", scrollOffset=" + scrollOffset + ", newScroolOffset=" + newScrollOffset);
 
 			//			double maxWidth = 0;
 
@@ -1416,6 +1418,8 @@ namespace ICSharpCode.AvalonEdit.Rendering
 
 		void SetScrollOffset(Vector vector)
 		{
+			Debug.WriteLine("SetScrollOffset:" + vector);
+
 			if (!canHorizontallyScroll)
 				vector.X = 0;
 			if (!canVerticallyScroll)
