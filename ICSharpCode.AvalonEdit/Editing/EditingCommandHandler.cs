@@ -464,20 +464,26 @@ namespace ICSharpCode.AvalonEdit.Editing
 				// (but don't try the same format twice)
 				if (pastingEventArgs.FormatToApply != null && dataObject.GetDataPresent(pastingEventArgs.FormatToApply))
 					text = (string)dataObject.GetData(pastingEventArgs.FormatToApply);
-				else if (pastingEventArgs.FormatToApply != DataFormats.UnicodeText && dataObject.GetDataPresent(DataFormats.UnicodeText))
+				else if (pastingEventArgs.FormatToApply != DataFormats.UnicodeText &&
+				         dataObject.GetDataPresent(DataFormats.UnicodeText))
 					text = (string)dataObject.GetData(DataFormats.UnicodeText);
-				else if (pastingEventArgs.FormatToApply != DataFormats.Text && dataObject.GetDataPresent(DataFormats.Text))
+				else if (pastingEventArgs.FormatToApply != DataFormats.Text &&
+				         dataObject.GetDataPresent(DataFormats.Text))
 					text = (string)dataObject.GetData(DataFormats.Text);
 				else
 					return null; // no text data format
-								 // convert text back to correct newlines for this document
+				// convert text back to correct newlines for this document
 				string newLine = TextUtilities.GetNewLineFromDocument(textArea.Document, textArea.Caret.Line);
 				text = TextUtilities.NormalizeNewLines(text, newLine);
-				text = textArea.Options.ConvertTabsToSpaces ? text.Replace("\t", new String(' ', textArea.Options.IndentationSize)) : text;
+				text = textArea.Options.ConvertTabsToSpaces
+					? text.Replace("\t", new String(' ', textArea.Options.IndentationSize))
+					: text;
 				return text;
 			} catch (OutOfMemoryException) {
 				// may happen when trying to paste a huge string
 				return null;
+			} catch (Exception ex) {
+				return "CLIPBOARD_ERROR:" + ex.Message;
 			}
 		}
 		#endregion
