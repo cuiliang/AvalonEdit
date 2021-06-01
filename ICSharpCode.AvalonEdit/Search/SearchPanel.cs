@@ -189,6 +189,7 @@ namespace ICSharpCode.AvalonEdit.Search
 				throw new ArgumentNullException("editor");
 			return Install(editor.TextArea);
 		}
+		
 
 		/// <summary>
 		/// Creates a SearchPanel and installs it to the TextArea.
@@ -387,6 +388,14 @@ namespace ICSharpCode.AvalonEdit.Search
 				case Key.Escape:
 					e.Handled = true;
 					Close();
+					break;
+				case Key.F:
+					if (Keyboard.Modifiers  == ModifierKeys.Control) 
+					{
+						// 再次Ctrl+F关闭搜索框
+						e.Handled = true;
+						Close();
+					}
 					break;
 			}
 		}

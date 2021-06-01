@@ -86,6 +86,7 @@ namespace ICSharpCode.AvalonEdit.Search
 
 		void ExecuteFind(object sender, ExecutedRoutedEventArgs e)
 		{
+
 			panel.Open();
 			if (!(TextArea.Selection.IsEmpty || TextArea.Selection.IsMultiline))
 				panel.SearchPattern = TextArea.Selection.GetText();
@@ -126,6 +127,28 @@ namespace ICSharpCode.AvalonEdit.Search
 				panel.Close();
 				e.Handled = true;
 			}
+		}
+
+		/// <summary>
+		/// 尝试关闭搜索条
+		/// </summary>
+		public bool TryClose()
+		{
+			if (!panel.IsClosed) {
+				panel.Close();
+				return true;
+			}
+
+			return false;
+		}
+
+		/// <summary>
+		/// 搜索条是否打开
+		/// </summary>
+		/// <returns></returns>
+		public bool IsOpen()
+		{
+			return !panel.IsClosed;
 		}
 
 		/// <summary>

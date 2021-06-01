@@ -8689,6 +8689,17 @@
             TextAreaInputHandler that registers all search-related commands.
             </summary>
         </member>
+        <member name="M:ICSharpCode.AvalonEdit.Search.SearchInputHandler.TryClose">
+            <summary>
+            尝试关闭搜索条
+            </summary>
+        </member>
+        <member name="M:ICSharpCode.AvalonEdit.Search.SearchInputHandler.IsOpen">
+            <summary>
+            搜索条是否打开
+            </summary>
+            <returns></returns>
+        </member>
         <member name="E:ICSharpCode.AvalonEdit.Search.SearchInputHandler.SearchOptionsChanged">
             <summary>
             Fired when SearchOptions are modified inside the SearchPanel.
