@@ -3471,7 +3471,7 @@
         </member>
         <member name="F:ICSharpCode.AvalonEdit.Editing.RectangleSelection.BoxSelectRightByWord">
             <summary>
-            Expands the selection left by one word, creating a rectangular selection.
+            Expands the selection right by one word, creating a rectangular selection.
             Key gesture: Ctrl+Alt+Shift+Right
             </summary>
         </member>
@@ -3483,7 +3483,7 @@
         </member>
         <member name="F:ICSharpCode.AvalonEdit.Editing.RectangleSelection.BoxSelectDownByLine">
             <summary>
-            Expands the selection up by one line, creating a rectangular selection.
+            Expands the selection down by one line, creating a rectangular selection.
             Key gesture: Alt+Shift+Down
             </summary>
         </member>
@@ -4381,6 +4381,16 @@
             FoldingMarkerBrush dependency property.
             </summary>
         </member>
+        <member name="M:ICSharpCode.AvalonEdit.Folding.FoldingMargin.GetFoldingMarkerBrush(System.Windows.DependencyObject)">
+            <summary>
+            Gets the value of the <see cref="P:ICSharpCode.AvalonEdit.Folding.FoldingMargin.FoldingMarkerBrush"/> attached property for a specified <see cref="T:System.Windows.DependencyObject"/>.
+            </summary>
+        </member>
+        <member name="M:ICSharpCode.AvalonEdit.Folding.FoldingMargin.SetFoldingMarkerBrush(System.Windows.DependencyObject,System.Windows.Media.Brush)">
+            <summary>
+            Sets the value of the <see cref="P:ICSharpCode.AvalonEdit.Folding.FoldingMargin.FoldingMarkerBrush"/> attached property for a specified <see cref="T:System.Windows.DependencyObject"/>.
+            </summary>
+        </member>
         <member name="P:ICSharpCode.AvalonEdit.Folding.FoldingMargin.FoldingMarkerBrush">
             <summary>
             Gets/sets the Brush used for displaying the lines of folding markers.
@@ -4389,6 +4399,16 @@
         <member name="F:ICSharpCode.AvalonEdit.Folding.FoldingMargin.FoldingMarkerBackgroundBrushProperty">
             <summary>
             FoldingMarkerBackgroundBrush dependency property.
+            </summary>
+        </member>
+        <member name="M:ICSharpCode.AvalonEdit.Folding.FoldingMargin.GetFoldingMarkerBackgroundBrush(System.Windows.DependencyObject)">
+            <summary>
+            Gets the value of the <see cref="P:ICSharpCode.AvalonEdit.Folding.FoldingMargin.FoldingMarkerBackgroundBrush"/> attached property for a specified <see cref="T:System.Windows.DependencyObject"/>.
+            </summary>
+        </member>
+        <member name="M:ICSharpCode.AvalonEdit.Folding.FoldingMargin.SetFoldingMarkerBackgroundBrush(System.Windows.DependencyObject,System.Windows.Media.Brush)">
+            <summary>
+            Sets the value of the <see cref="P:ICSharpCode.AvalonEdit.Folding.FoldingMargin.FoldingMarkerBackgroundBrush"/> attached property for a specified <see cref="T:System.Windows.DependencyObject"/>.
             </summary>
         </member>
         <member name="P:ICSharpCode.AvalonEdit.Folding.FoldingMargin.FoldingMarkerBackgroundBrush">
@@ -4401,6 +4421,16 @@
             SelectedFoldingMarkerBrush dependency property.
             </summary>
         </member>
+        <member name="M:ICSharpCode.AvalonEdit.Folding.FoldingMargin.GetSelectedFoldingMarkerBrush(System.Windows.DependencyObject)">
+            <summary>
+            Gets the value of the <see cref="P:ICSharpCode.AvalonEdit.Folding.FoldingMargin.SelectedFoldingMarkerBrush"/> attached property for a specified <see cref="T:System.Windows.DependencyObject"/>.
+            </summary>
+        </member>
+        <member name="M:ICSharpCode.AvalonEdit.Folding.FoldingMargin.SetSelectedFoldingMarkerBrush(System.Windows.DependencyObject,System.Windows.Media.Brush)">
+            <summary>
+            Sets the value of the <see cref="P:ICSharpCode.AvalonEdit.Folding.FoldingMargin.SelectedFoldingMarkerBrush"/> attached property for a specified <see cref="T:System.Windows.DependencyObject"/>.
+            </summary>
+        </member>
         <member name="P:ICSharpCode.AvalonEdit.Folding.FoldingMargin.SelectedFoldingMarkerBrush">
             <summary>
             Gets/sets the Brush used for displaying the lines of selected folding markers.
@@ -4409,6 +4439,16 @@
         <member name="F:ICSharpCode.AvalonEdit.Folding.FoldingMargin.SelectedFoldingMarkerBackgroundBrushProperty">
             <summary>
             SelectedFoldingMarkerBackgroundBrush dependency property.
+            </summary>
+        </member>
+        <member name="M:ICSharpCode.AvalonEdit.Folding.FoldingMargin.GetSelectedFoldingMarkerBackgroundBrush(System.Windows.DependencyObject)">
+            <summary>
+            Gets the value of the <see cref="P:ICSharpCode.AvalonEdit.Folding.FoldingMargin.SelectedFoldingMarkerBackgroundBrush"/> attached property for a specified <see cref="T:System.Windows.DependencyObject"/>.
+            </summary>
+        </member>
+        <member name="M:ICSharpCode.AvalonEdit.Folding.FoldingMargin.SetSelectedFoldingMarkerBackgroundBrush(System.Windows.DependencyObject,System.Windows.Media.Brush)">
+            <summary>
+            Sets the value of the <see cref="P:ICSharpCode.AvalonEdit.Folding.FoldingMargin.SelectedFoldingMarkerBackgroundBrush"/> attached property for a specified <see cref="T:System.Windows.DependencyObject"/>.
             </summary>
         </member>
         <member name="P:ICSharpCode.AvalonEdit.Folding.FoldingMargin.SelectedFoldingMarkerBackgroundBrush">
@@ -6827,11 +6867,6 @@
             <summary>
             Collapses the specified text section.
             Runtime: O(log n)
-            </summary>
-        </member>
-        <member name="M:ICSharpCode.AvalonEdit.Rendering.HeightTree.CheckAllContainedIn(System.Collections.Generic.IEnumerable{ICSharpCode.AvalonEdit.Rendering.CollapsedLineSection},System.Collections.Generic.ICollection{ICSharpCode.AvalonEdit.Rendering.CollapsedLineSection})">
-            <summary>
-            Checks that all elements in list1 are contained in list2.
             </summary>
         </member>
         <member name="P:ICSharpCode.AvalonEdit.Rendering.HeightTreeLineNode.TotalHeight">
@@ -11239,6 +11274,36 @@
         <member name="M:ICSharpCode.AvalonEdit.Utils.Win32.DestroyCaret">
             <summary>
             Destroys the caret previously created using <see cref="M:ICSharpCode.AvalonEdit.Utils.Win32.CreateCaret(System.Windows.Media.Visual,System.Windows.Size)"/>.
+            </summary>
+        </member>
+        <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">
+            <summary>
+            GeneratedInternalTypeHelper
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateInstance(System.Type,System.Globalization.CultureInfo)">
+            <summary>
+            CreateInstance
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.GetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            GetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.SetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            SetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateDelegate(System.Type,System.Object,System.String)">
+            <summary>
+            CreateDelegate
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.AddEventHandler(System.Reflection.EventInfo,System.Object,System.Delegate)">
+            <summary>
+            AddEventHandler
             </summary>
         </member>
     </members>

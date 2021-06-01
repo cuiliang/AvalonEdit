@@ -258,9 +258,13 @@ namespace ICSharpCode.AvalonEdit.Editing
 						// thus we need to validate endPos before using it in the selection.
 						if (endPos.Line < 1 || endPos.Column < 1)
 							endPos = new TextViewPosition(Math.Max(endPos.Line, 1), Math.Max(endPos.Column, 1));
+						// Don't do anything if the number of lines of a rectangular selection would be changed by the deletion.
+						if (textArea.Selection is RectangleSelection && startPos.Line != endPos.Line)
+							return;
 						// Don't select the text to be deleted; just reuse the ReplaceSelectionWithText logic
-						var sel = new SimpleSelection(textArea, startPos, endPos);
-						sel.ReplaceSelectionWithText(string.Empty);
+						// Reuse the existing selection, so that we continue using the same logic
+						textArea.Selection.StartSelectionOrSetEndpoint(startPos, endPos)
+							.ReplaceSelectionWithText(string.Empty);
 					} else {
 						textArea.RemoveSelectedText();
 					}
@@ -464,20 +468,16 @@ namespace ICSharpCode.AvalonEdit.Editing
 				// (but don't try the same format twice)
 				if (pastingEventArgs.FormatToApply != null && dataObject.GetDataPresent(pastingEventArgs.FormatToApply))
 					text = (string)dataObject.GetData(pastingEventArgs.FormatToApply);
-				else if (pastingEventArgs.FormatToApply != DataFormats.UnicodeText &&
-				         dataObject.GetDataPresent(DataFormats.UnicodeText))
+				else if (pastingEventArgs.FormatToApply != DataFormats.UnicodeText && dataObject.GetDataPresent(DataFormats.UnicodeText))
 					text = (string)dataObject.GetData(DataFormats.UnicodeText);
-				else if (pastingEventArgs.FormatToApply != DataFormats.Text &&
-				         dataObject.GetDataPresent(DataFormats.Text))
+				else if (pastingEventArgs.FormatToApply != DataFormats.Text && dataObject.GetDataPresent(DataFormats.Text))
 					text = (string)dataObject.GetData(DataFormats.Text);
 				else
 					return null; // no text data format
 				// convert text back to correct newlines for this document
 				string newLine = TextUtilities.GetNewLineFromDocument(textArea.Document, textArea.Caret.Line);
 				text = TextUtilities.NormalizeNewLines(text, newLine);
-				text = textArea.Options.ConvertTabsToSpaces
-					? text.Replace("\t", new String(' ', textArea.Options.IndentationSize))
-					: text;
+				text = textArea.Options.ConvertTabsToSpaces ? text.Replace("\t", new String(' ', textArea.Options.IndentationSize)) : text;
 				return text;
 			} catch (OutOfMemoryException) {
 				// may happen when trying to paste a huge string
