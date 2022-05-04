@@ -253,10 +253,9 @@ namespace ICSharpCode.AvalonEdit.CodeCompletion
 		/// </summary>
 		void SelectItemFiltering(string query)
 		{
-			// if the user just typed one more character, don't filter all data but just filter what we are already displaying
-			var listToFilter = (this.currentList != null && (!string.IsNullOrEmpty(this.currentText)) && (!string.IsNullOrEmpty(query)) &&
-								query.StartsWith(this.currentText, StringComparison.Ordinal)) ?
-				this.currentList : this.completionData;
+			
+			// 拼音筛选的时候，有可能会输入更多更匹配。所以每次都从全体待选列表中筛选。
+			var listToFilter = this.completionData;
 
 			var matchingItems =
 				from item in listToFilter
