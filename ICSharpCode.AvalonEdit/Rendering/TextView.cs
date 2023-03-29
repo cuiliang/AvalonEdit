@@ -137,7 +137,7 @@ namespace ICSharpCode.AvalonEdit.Rendering
 				TextDocumentWeakEventManager.Changing.AddListener(newValue, this);
 				formatter = TextFormatterFactory.Create(this);
 				InvalidateDefaultTextMetrics(); // measuring DefaultLineHeight depends on formatter
-				heightTree = new HeightTree(newValue, DefaultLineHeight);
+				heightTree = new HeightTree(newValue, DefaultLineHeight * LineSpacing);
 				cachedElements = new TextViewCachedElements();
 			}
 			InvalidateMeasure(DispatcherPriority.Normal);
@@ -1432,12 +1432,12 @@ namespace ICSharpCode.AvalonEdit.Rendering
 
 		void IScrollInfo.LineUp()
 		{
-			((IScrollInfo)this).SetVerticalOffset(scrollOffset.Y - DefaultLineHeight);
+			((IScrollInfo)this).SetVerticalOffset(scrollOffset.Y - DefaultLineHeight * LineSpacing);
 		}
 
 		void IScrollInfo.LineDown()
 		{
-			((IScrollInfo)this).SetVerticalOffset(scrollOffset.Y + DefaultLineHeight);
+			((IScrollInfo)this).SetVerticalOffset(scrollOffset.Y + DefaultLineHeight * LineSpacing);
 		}
 
 		void IScrollInfo.LineLeft()
@@ -1473,14 +1473,14 @@ namespace ICSharpCode.AvalonEdit.Rendering
 		void IScrollInfo.MouseWheelUp()
 		{
 			((IScrollInfo)this).SetVerticalOffset(
-				scrollOffset.Y - (SystemParameters.WheelScrollLines * DefaultLineHeight));
+				scrollOffset.Y - (SystemParameters.WheelScrollLines * DefaultLineHeight * LineSpacing));
 			OnScrollChange();
 		}
 
 		void IScrollInfo.MouseWheelDown()
 		{
 			((IScrollInfo)this).SetVerticalOffset(
-				scrollOffset.Y + (SystemParameters.WheelScrollLines * DefaultLineHeight));
+				scrollOffset.Y + (SystemParameters.WheelScrollLines * DefaultLineHeight * LineSpacing));
 			OnScrollChange();
 		}
 
@@ -1574,7 +1574,7 @@ namespace ICSharpCode.AvalonEdit.Rendering
 			}
 			// Update heightTree.DefaultLineHeight, if a document is loaded.
 			if (heightTree != null)
-				heightTree.DefaultLineHeight = defaultLineHeight;
+				heightTree.DefaultLineHeight = defaultLineHeight * LineSpacing;
 		}
 
 		static double ValidateVisualOffset(double offset)
