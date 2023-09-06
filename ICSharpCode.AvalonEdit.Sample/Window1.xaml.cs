@@ -19,6 +19,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -62,6 +63,9 @@ namespace ICSharpCode.AvalonEdit.Sample
 			propertyGridComboBox.SelectedIndex = 2;
 			
 			//textEditor.TextArea.SelectionBorder = null;
+
+			textEditor.WordWrap = false;
+			
 			
 			//textEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("C#");
 			//textEditor.SyntaxHighlighting = customHighlighting;
@@ -77,6 +81,23 @@ namespace ICSharpCode.AvalonEdit.Sample
 			foldingUpdateTimer.Start();
 
 			
+
+			Loaded += OnLoaded;
+		}
+
+		private void OnLoaded(object sender, RoutedEventArgs e)
+		{
+			var sb = new StringBuilder();
+			for (int i = 0; i < 200; i++) {
+				sb.Append($"{i}.{new string('-', 20)}\r\n");
+			}
+
+			textEditor.TextArea.TextView.Margin = new Thickness(10);
+
+			textEditor.Text = sb.ToString();
+
+			textEditor.ScrollToEnd();
+			//textEditor.ScrollTo(textEditor.LineCount, 0);
 		}
 
 		string currentFileName;
