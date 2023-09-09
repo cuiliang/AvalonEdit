@@ -351,11 +351,14 @@ namespace ICSharpCode.AvalonEdit.CodeCompletion
 
 		int GetMatchQuality(string itemText, string query)
 		{
+			if (itemText == null) {
 #if DEBUG
-			throw new ArgumentNullException("itemText", "ICompletionData.Text returned null");
+				throw new ArgumentNullException("itemText", "ICompletionData.Text returned null");
 #else
-			return 0;
+				return 0;
 #endif
+			}
+
 
 			if (CustomGetMatchQualityFunc != null) {
 				return CustomGetMatchQualityFunc(itemText, query);
