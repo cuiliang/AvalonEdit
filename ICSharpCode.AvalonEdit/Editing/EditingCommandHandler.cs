@@ -77,6 +77,7 @@ namespace ICSharpCode.AvalonEdit.Editing
 
 			CommandBindings.Add(new CommandBinding(AvalonEditCommands.ToggleOverstrike, OnToggleOverstrike));
 			CommandBindings.Add(new CommandBinding(AvalonEditCommands.DeleteLine, OnDeleteLine));
+			CommandBindings.Add(new CommandBinding(AvalonEditCommands.Duplicate, OnDuplicate));
 
 			CommandBindings.Add(new CommandBinding(AvalonEditCommands.RemoveLeadingWhitespace, OnRemoveLeadingWhitespace));
 			CommandBindings.Add(new CommandBinding(AvalonEditCommands.RemoveTrailingWhitespace, OnRemoveTrailingWhitespace));
@@ -518,6 +519,37 @@ namespace ICSharpCode.AvalonEdit.Editing
 				args.Handled = true;
 			}
 		}
+		#endregion
+
+		#region Duplicate
+		/// <summary>
+		/// Duplicate selection or current line
+		/// </summary>
+		/// <param name="target"></param>
+		/// <param name="args"></param>
+		static void OnDuplicate(object target, ExecutedRoutedEventArgs args)
+		{
+			TextArea textArea = GetTextArea(target);
+			if (textArea != null && textArea.Document != null) {
+				
+				if (textArea.Selection.IsEmpty) {
+					// 没有选中的文本，复制整行
+					var line = textArea.Document.GetLineByOffset(textArea.Caret.Offset);
+					var text = textArea.Document.GetText(line);
+					textArea.Document.Insert(line.Offset,  text + "\r\n");
+				} else {
+					// 有选中的文本，复制选中的内容
+					string selectedText = textArea.Selection.GetText();
+					//textArea.Selection.ReplaceSelectionWithText(selectedText + selectedText);
+					var offset = textArea.Document.GetOffset(textArea.Selection.StartPosition.Location);
+					textArea.Document.Insert(offset, selectedText);
+				}
+				
+
+				args.Handled = true;
+			}
+		}
+
 		#endregion
 
 		#region Remove..Whitespace / Convert Tabs-Spaces

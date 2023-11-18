@@ -42,6 +42,15 @@ namespace ICSharpCode.AvalonEdit
 		public static readonly RoutedCommand DeleteLine = new RoutedCommand(
 			"DeleteLine", typeof(TextEditor),
 			new InputGestureCollection {
+				new KeyGesture(Key.D, ModifierKeys.Control|ModifierKeys.Shift)
+			});
+
+		/// <summary>
+		/// Duplicate selected text or current line
+		/// </summary>
+		public static readonly RoutedCommand Duplicate = new RoutedCommand(
+			"Duplicate", typeof(TextEditor),
+			new InputGestureCollection {
 				new KeyGesture(Key.D, ModifierKeys.Control)
 			});
 
