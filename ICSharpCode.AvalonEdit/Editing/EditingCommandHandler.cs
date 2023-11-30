@@ -30,6 +30,8 @@ using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Utils;
 
+using static System.Net.Mime.MediaTypeNames;
+
 namespace ICSharpCode.AvalonEdit.Editing
 {
 	/// <summary>
@@ -406,7 +408,8 @@ namespace ICSharpCode.AvalonEdit.Editing
 			TextArea textArea = GetTextArea(target);
 			if (textArea != null && textArea.Document != null) {
 				args.CanExecute = textArea.ReadOnlySectionProvider.CanInsert(textArea.Caret.Offset)
-					&& Clipboard.ContainsText();
+					&& (Clipboard.ContainsText() || Clipboard.ContainsFileDropList())
+					;
 				// WPF Clipboard.ContainsText() is safe to call without catching ExternalExceptions
 				// because it doesn't try to lock the clipboard - it just peeks inside with IsClipboardFormatAvailable().
 				args.Handled = true;
@@ -426,30 +429,45 @@ namespace ICSharpCode.AvalonEdit.Editing
 				if (dataObject == null)
 					return;
 
-				var pastingEventArgs = new DataObjectPastingEventArgs(dataObject, false, DataFormats.UnicodeText);
-				textArea.RaiseEvent(pastingEventArgs);
-				if (pastingEventArgs.CommandCancelled)
-					return;
 
-				string text = GetTextToPaste(pastingEventArgs, textArea);
 
-				if (!string.IsNullOrEmpty(text)) {
-					dataObject = pastingEventArgs.DataObject;
-					bool fullLine = textArea.Options.CutCopyWholeLine && dataObject.GetDataPresent(LineSelectedType);
-					bool rectangular = dataObject.GetDataPresent(RectangleSelection.RectangularSelectionDataType);
+				if (dataObject.GetDataPresent(DataFormats.UnicodeText)) {
+					var pastingEventArgs = new DataObjectPastingEventArgs(dataObject, false, DataFormats.UnicodeText);
+					textArea.RaiseEvent(pastingEventArgs);
+					if (pastingEventArgs.CommandCancelled)
+						return;
 
-					if (fullLine) {
-						DocumentLine currentLine = textArea.Document.GetLineByNumber(textArea.Caret.Line);
-						if (textArea.ReadOnlySectionProvider.CanInsert(currentLine.Offset)) {
-							textArea.Document.Insert(currentLine.Offset, text);
-						}
-					} else if (rectangular && textArea.Selection.IsEmpty && !(textArea.Selection is RectangleSelection)) {
-						if (!RectangleSelection.PerformRectangularPaste(textArea, textArea.Caret.Position, text, false))
+					string text = GetTextToPaste(pastingEventArgs, textArea);
+
+					if (!string.IsNullOrEmpty(text)) {
+						dataObject = pastingEventArgs.DataObject;
+						bool fullLine = textArea.Options.CutCopyWholeLine && dataObject.GetDataPresent(LineSelectedType);
+						bool rectangular = dataObject.GetDataPresent(RectangleSelection.RectangularSelectionDataType);
+
+						if (fullLine) {
+							DocumentLine currentLine = textArea.Document.GetLineByNumber(textArea.Caret.Line);
+							if (textArea.ReadOnlySectionProvider.CanInsert(currentLine.Offset)) {
+								textArea.Document.Insert(currentLine.Offset, text);
+							}
+						} else if (rectangular && textArea.Selection.IsEmpty && !(textArea.Selection is RectangleSelection)) {
+							if (!RectangleSelection.PerformRectangularPaste(textArea, textArea.Caret.Position, text, false))
+								textArea.ReplaceSelectionWithText(text);
+						} else {
 							textArea.ReplaceSelectionWithText(text);
-					} else {
-						textArea.ReplaceSelectionWithText(text);
+						}
 					}
+				} else if (dataObject.GetDataPresent(DataFormats.FileDrop)) {
+					// 将文件路径的列表作为文本粘贴
+					string[] filePaths = Clipboard.GetFileDropList().Cast<string>().ToArray();
+					var text = string.Join(Environment.NewLine, filePaths);
+					textArea.ReplaceSelectionWithText(text);
+				} else {
+					return;
 				}
+
+
+
+
 				textArea.Caret.BringCaretToView();
 				args.Handled = true;
 			}
@@ -475,7 +493,7 @@ namespace ICSharpCode.AvalonEdit.Editing
 					text = (string)dataObject.GetData(DataFormats.Text);
 				else
 					return null; // no text data format
-				// convert text back to correct newlines for this document
+								 // convert text back to correct newlines for this document
 				string newLine = TextUtilities.GetNewLineFromDocument(textArea.Document, textArea.Caret.Line);
 				text = TextUtilities.NormalizeNewLines(text, newLine);
 				text = textArea.Options.ConvertTabsToSpaces ? text.Replace("\t", new String(' ', textArea.Options.IndentationSize)) : text;
@@ -531,12 +549,12 @@ namespace ICSharpCode.AvalonEdit.Editing
 		{
 			TextArea textArea = GetTextArea(target);
 			if (textArea != null && textArea.Document != null) {
-				
+
 				if (textArea.Selection.IsEmpty) {
 					// 没有选中的文本，复制整行
 					var line = textArea.Document.GetLineByOffset(textArea.Caret.Offset);
 					var text = textArea.Document.GetText(line);
-					textArea.Document.Insert(line.Offset,  text + "\r\n");
+					textArea.Document.Insert(line.Offset, text + "\r\n");
 				} else {
 					// 有选中的文本，复制选中的内容
 					string selectedText = textArea.Selection.GetText();
@@ -544,7 +562,7 @@ namespace ICSharpCode.AvalonEdit.Editing
 					var offset = textArea.Document.GetOffset(textArea.Selection.StartPosition.Location);
 					textArea.Document.Insert(offset, selectedText);
 				}
-				
+
 
 				args.Handled = true;
 			}
