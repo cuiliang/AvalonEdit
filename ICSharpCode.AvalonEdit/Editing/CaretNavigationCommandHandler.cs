@@ -141,11 +141,67 @@ namespace ICSharpCode.AvalonEdit.Editing
 				TextArea textArea = GetTextArea(target);
 				if (textArea != null && textArea.Document != null) {
 					args.Handled = true;
-					textArea.ClearSelection();
-					MoveCaret(textArea, direction);
+
+					// 选中内容的时候，按方向键左右，清除选区，移动光标到选区的前后位置（参考visualstudio等编辑器的工作模式）。
+					if (textArea.Selection?.IsEmpty == false 
+					    && (direction == CaretMovementType.CharLeft || direction == CaretMovementType.CharRight)) {
+
+						
+						var pos = direction == CaretMovementType.CharLeft ? GetSelectionBegin(textArea) : GetSelectionEnd(textArea);
+						textArea.ClearSelection();
+						textArea.Caret.Position = pos;
+					} else {
+						textArea.ClearSelection();
+						MoveCaret(textArea, direction);
+					}
+
+					
 					textArea.Caret.BringCaretToView();
 				}
 			};
+		}
+
+		/// <summary>
+		/// 获取选区的开始位置。StartPosition，根据选择的方向可能是靠后的位置
+		/// </summary>
+		/// <param name="textArea"></param>
+		/// <returns></returns>
+		static TextViewPosition GetSelectionBegin(TextArea textArea)
+		{
+			if (textArea.Selection.IsEmpty) {
+				return textArea.Caret.Position;
+			}
+
+			if (textArea.Selection.StartPosition.Line < textArea.Selection.EndPosition.Line) {
+				return textArea.Selection.StartPosition;
+			}else if (textArea.Selection.StartPosition.Line > textArea.Selection.EndPosition.Line) {
+				return textArea.Selection.EndPosition;
+			} else {
+				if (textArea.Selection.StartPosition.Column < textArea.Selection.EndPosition.Column) {
+					return textArea.Selection.StartPosition;
+				} else {
+					return textArea.Selection.EndPosition;
+				}
+			}
+		}
+
+		static TextViewPosition GetSelectionEnd(TextArea textArea)
+		{
+			if (textArea.Selection.IsEmpty) {
+				return textArea.Caret.Position;
+			}
+
+			if (textArea.Selection.StartPosition.Line < textArea.Selection.EndPosition.Line) {
+				return textArea.Selection.EndPosition;
+			} else if (textArea.Selection.StartPosition.Line > textArea.Selection.EndPosition.Line) {
+				return textArea.Selection.StartPosition;
+			} else {
+				if (textArea.Selection.StartPosition.Column < textArea.Selection.EndPosition.Column) {
+					return textArea.Selection.EndPosition;
+				} else {
+					return textArea.Selection.StartPosition;
+				}
+			}
 		}
 
 		static ExecutedRoutedEventHandler OnMoveCaretExtendSelection(CaretMovementType direction)
