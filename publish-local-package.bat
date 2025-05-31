@@ -1,0 +1,1 @@
+dotnet pack .\ICSharpCode.AvalonEdit\ICSharpCode.AvalonEdit.csproj -c Release -o ..\_nupkgs
