@@ -44,7 +44,7 @@
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net6.0-windows' ">
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net7.0-windows' ">
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net8.0-windows' ">
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net462' ">
