@@ -10,9 +10,9 @@
     <Company>ic#code</Company>
     <Copyright>2000-2023 AlphaSierraPapa for the SharpDevelop Team</Copyright>
     <Description>This is modified version of ICSharpCode.AvalongEdit, not official package.</Description>
-    <Version>6.3</Version>
-    <AssemblyVersion>6.3.0.100</AssemblyVersion>
-    <FileVersion>6.3.0.100</FileVersion>
+    <Version>6.3.1</Version>
+    <AssemblyVersion>6.3.1.101</AssemblyVersion>
+    <FileVersion>6.3.1.101</FileVersion>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <EnableSourceLink>true</EnableSourceLink>
   </PropertyGroup>
