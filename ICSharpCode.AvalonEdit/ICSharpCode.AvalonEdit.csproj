@@ -1,28 +1,27 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFrameworks>net462;net8-windows</TargetFrameworks>
+    <TargetFrameworks>net8.0-windows;net10.0-windows;net462</TargetFrameworks>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
     <DefineConstants>TRACE</DefineConstants>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>ICSharpCode.AvalonEdit.snk</AssemblyOriginatorKeyFile>
     <Company>ic#code</Company>
-    <Copyright>2000-2023 AlphaSierraPapa for the SharpDevelop Team</Copyright>
-    <Description>This is modified version of ICSharpCode.AvalongEdit, not official package.</Description>
-    <Version>6.3.1</Version>
-    <AssemblyVersion>6.3.1.101</AssemblyVersion>
-    <FileVersion>6.3.1.101</FileVersion>
+    <Copyright>2000-2025 AlphaSierraPapa for the SharpDevelop Team</Copyright>
+    <Description>AvalonEdit is the WPF-based text editor used in SharpDevelop.</Description>
+    <Version>6.3.2</Version>
+    <AssemblyVersion>6.3.2.0</AssemblyVersion>
+    <FileVersion>6.3.2.0</FileVersion>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <EnableSourceLink>true</EnableSourceLink>
   </PropertyGroup>
 
   <PropertyGroup>
-    <PackageId>Quicker.AvalonEdit</PackageId>
+    <PackageId>AvalonEdit</PackageId>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <RepositoryUrl>https://github.com/cuiliang/AvalonEdit.git</RepositoryUrl>
+    <RepositoryUrl>https://github.com/icsharpcode/AvalonEdit.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <Authors>AvalonEdit Contributors</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -41,7 +40,7 @@
     <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net6.0-windows' ">
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net10.0-windows' ">
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net8.0-windows' ">
@@ -71,7 +70,9 @@
     <EmbeddedResource Include="Highlighting\Resources\*" />
     <EmbeddedResource Remove="Highlighting\Resources\Resources.cs" />
     <Resource Include="Highlighting\Resources\Resources.cs" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0"  PrivateAssets="All">
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
 </Project>
